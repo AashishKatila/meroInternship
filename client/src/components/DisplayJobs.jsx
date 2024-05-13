@@ -6,20 +6,7 @@ const DisplayJobs = () => {
 
     const {loading,error,jobList} = useSelector((state) => state.jobList)
     
-    // function load(jobList){
-    //   // console.log(jobList);
-    //   // console.log(jobList.job_list);
-    //   jobList.job_list.slice(1).map((job) => {
-    //     // console.log(`Job ${index + 1}:`);
-    //     console.log(job.title); // Log each job list
-    //   });
-    // }
-
     const dispatch = useDispatch()
-
-    // if(jobList){
-    //   load(jobList)
-    // }
 
     useEffect(()=>{
         dispatch(fetchJobs())
@@ -27,13 +14,16 @@ const DisplayJobs = () => {
 
     return (
         <>
-    <div className='text-green-900 mt-8 font-bold'>Jobs: </div>
+    <div className='text-green-900 my-8 font-bold text-xl'>Jobs: </div>
     { loading && !error && <p> Loading</p> }
     {error && <p>Error: {error}</p>}
       {jobList.job_list ? (
         <ul>
          {jobList.job_list.slice(1).map((job, index) => (
+            <div className='grid grid-cols-4 my-2'>
             <li key={index}>{job.title}</li>
+            <button className='px-4 py-2 bg-green-400 font-bold w-44'>Apply</button>
+            </div>
          ))}
         </ul>
       ) : (

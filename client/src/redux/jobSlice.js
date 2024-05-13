@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const fetchJobs = createAsyncThunk('/jobs/fetchJobs',async(_,fetchAPI) =>{
+export const fetchJobs = createAsyncThunk('/jobs/fetchJobs',async() =>{
     try{
-        const token = fetchAPI.getState().user.token
+        const token = localStorage.getItem("token")
         console.log("Hello " ,token )
         const res = await axios.get("http://127.0.0.1:8000/api/user/job_list",{
             headers:{
