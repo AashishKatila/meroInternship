@@ -6,13 +6,17 @@ import { useSelector } from 'react-redux'
 
 function getUser(){
     let {user} = useSelector((state) => state.auth)
+
     if(user){
-        console.log(user)
-        localStorage.setItem("token",user.token)
-    }else{
-        user = null
+      console.log(user)
+      return user;
     }
-    return user
+
+  const userFromStorage = JSON.parse(localStorage.getItem("user"));
+  if (userFromStorage) {
+    return userFromStorage;
+  }
+    return null
 } 
 
 const handleLogout = () =>{

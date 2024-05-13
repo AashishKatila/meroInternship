@@ -5,9 +5,9 @@ export const authUser = createAsyncThunk('auth/authUser',async(userCredentials) 
     const res = await axios.post('http://127.0.0.1:8000/api/login',userCredentials)
     const userInfo = await res.data.data;
     localStorage.setItem('user',JSON.stringify(userInfo))
+    localStorage.setItem('token',JSON.parse(JSON.stringify(userInfo.token)))
     return userInfo
-
-}  )
+})
 
 const authSlice = createSlice({
     name: 'auth',

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchJobs } from '../redux/jobSlice'
+import { fetchJobs } from '../redux/jobListSlice'
 
 const DisplayJobs = () => {
 
