@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { loginUser } from '../redux/userSlice';
+import { authUser } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -8,7 +8,7 @@ const Login = () => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
 
-    const {loading,error} = useSelector((state) => state.user)
+    const {loading,error} = useSelector((state) => state.auth)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -16,7 +16,7 @@ const Login = () => {
     const handleLogin = (e) =>{
         e.preventDefault();
         let userCredentials = {email,password}
-        dispatch(loginUser(userCredentials)).then((result) =>{
+        dispatch(authUser(userCredentials)).then((result) =>{
             if(result.payload){
                 setEmail('')
                 setPassword('')

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import DisplayJobs from '../components/DisplayJobs'
-import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../redux/userSlice'
+import { useSelector } from 'react-redux'
+
 
 function getUser(){
-    let user = localStorage.getItem("user")
+    let {user} = useSelector((state) => state.auth)
     if(user){
-        user = JSON.parse(user)
+        console.log(user)
+        localStorage.setItem("token",user.token)
     }else{
         user = null
     }
@@ -16,19 +17,17 @@ function getUser(){
 
 const handleLogout = () =>{
   localStorage.removeItem("user")
+  localStorage.removeItem("token")
 }
-
 
 const Home = () => {
     
   const user = getUser()
   
-  useEffect(() =>{
-  },[user])
-  
   return (
     <>
     {user ?(<>
+    <div className='font-bold text-xl'>User Details</div>
     <div>{user.user.name}</div>
     <div>{user.user.email}</div>
     <div>{user.user.skills}</div>
