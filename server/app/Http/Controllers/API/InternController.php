@@ -15,11 +15,48 @@ use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use OpenApi\Annotations as OA;
 class InternController extends Controller
 {
+    
     use HttpResponses;
-    public function login(LoginInternRequest $request)
+
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"login intern"},
+     *     summary="login intern",
+     *     operationId="login_intern",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *           
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function login_intern(LoginInternRequest $request)
     {
        $request->validated($request->all());
 
@@ -39,7 +76,56 @@ class InternController extends Controller
         // ->json(['success' => 'success'], 200)   // JsonResponse object
         // ->withCookie(cookie('token', $token, $minute = 10));
     }
-    public function register(StoreInternRequest $request)
+
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     tags={"Register intern"},
+     *     summary="Register new intern",
+     *     operationId="register_intern",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *                 @OA\Property(
+     *                     property="name",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="skills",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function register_intern(StoreInternRequest $request)
     {
         $request->validated($request->all());
 
@@ -57,13 +143,42 @@ class InternController extends Controller
         ]);
     }
 
-    public function details()
+    /**
+     * @OA\get(
+     *     path="/api/details",
+     *     tags={"user details"},
+     *     summary="intern details",
+     *     security={{"sanctum":{}}},
+     *     operationId="details_intern",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     )
+     * )
+     */
+
+    public function details_intern()
     {
         $intern = Auth::user();
         return $this->success([
             'user' => $intern,
         ]);
     }
+    /**
+     * @OA\Post(
+     *     path="/api/user/logout",
+     *     tags={"logout"},
+     *     summary="Add skills",
+     *     security={{"sanctum":{}}},
+     *     operationId="logout",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     )
+     * )
+     */
 
     public function logout(Request $request)
     {
@@ -73,7 +188,55 @@ class InternController extends Controller
         ];
     }
 
-    public function update_profile(StoreInternRequest $request)
+    /**
+     * @OA\Post(
+     *     path="/api/user/updater",
+     *     tags={"update intern profile"},
+     *     summary="update intern profile details",
+     *     operationId="update_profile_intern",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *                 @OA\Property(
+     *                     property="name",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="skills",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function update_profile_intern(StoreInternRequest $request)
     {
         $request->validated($request->all());
         $user = Auth::user('user');
@@ -88,4 +251,29 @@ class InternController extends Controller
         ]);
 
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/user/delete",
+     *     tags={"delete intern"},
+     *     summary="delete intern",
+     *     security={{"sanctum":{}}},
+     *     operationId="delete_user",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     )
+     * )
+     */
+
+    public function delete_user()
+    {
+        $user = Auth::user('user');
+        User::find($user->id)->delete();
+        return $this->success([
+            'message' => 'successfully deleted user',
+        ]);
+    }
+
 }

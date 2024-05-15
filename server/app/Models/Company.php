@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class Company extends Authenticatable implements MustVerifyEmail
 {

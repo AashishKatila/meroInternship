@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class UserPasswordController extends Controller
+class AdminPasswordController extends Controller
 {
     public function sendResetLinkEmail(Request $request)
     {
@@ -16,7 +16,7 @@ class UserPasswordController extends Controller
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
-        // dd($response);
+        
         if ($response == Password::RESET_LINK_SENT) {
             return response()->json(['message' => 'Password reset link sent']);
         } else {
@@ -33,7 +33,7 @@ class UserPasswordController extends Controller
     public function broker()
     {
         
-            return Password::broker('users');
+            return Password::broker('admins');
         
     }
 
@@ -45,14 +45,13 @@ class UserPasswordController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        
         $response = $this->broker()->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $this->resetPassword($user, $password);
             }
         );
-        // dd($response);
+
         if ($response == Password::PASSWORD_RESET) {
             return response()->json(['message' => 'Password has been successfully reset']);
         } else {

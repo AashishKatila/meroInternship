@@ -42,9 +42,11 @@ class SkillController extends Controller
 
     public function filter_skill(SkillFilter $request)
     {
-        $request->validate($request->all());
+        // $request->validate($request->all());
         $skill = $request->skill;
-        $job_post = DB::select("select * from job_forms where skills like '%$skill%'");
+        // $job_post = DB::select("select * from job_forms where skills like '%$skill%'");
+        $job_post = job_form::search(request(key : 'skill'))->get();
+
         return $this->success([
             'job_post' => $job_post,
         ]);
@@ -58,20 +60,17 @@ class SkillController extends Controller
         foreach ($job_list as $job) {
 
             $parts1 = explode(" ", $job->skills);
-            // $parts2 = explode(" ", $user->skills);
-            // $matchingSkills = array_intersect($parts1, $parts2);
+            $parts2 = explode(" ", $user->skills);
+            $matchingSkills = array_intersect($parts1, $parts2);
             // dd($matchingSkills);
             $weight = 0;
             // dd(count($matchingSkills));
-            
-            $recommendationScore = $weight + count($parts1);
-            array_push($jobs, $job);
-            // $recommendationScore = $weight + count($matchingSkills)
+            $recommendationScore = $weight + count($matchingSkills);
             // dd($recommendationScore);
-            // if ($recommendationScore >= 2) {
-            //     // $recommendation = "Based on your skills and experience, you are a strong match for this job.";
-            //     array_push($jobs, $job);
-            // }
+            if ($recommendationScore >= 2) {
+                // $recommendation = "Based on your skills and experience, you are a strong match for this job.";
+                array_push($jobs, $job);
+            }
         }
         return response()->json([
             'job_list' => $jobs

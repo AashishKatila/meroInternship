@@ -44,21 +44,21 @@ return [
         ],
 
         'mysql' => [
-            // 'read' => [
-            //     'host' => [
-            //         '127.0.0.1',
-            //     ],
-            //     'username' => 'slave',
-            //     'password' => '1234567',
-            // ],
-            // 'write' => [
-            //     'host' => [
-            //         '127.0.0.1',
-            //     ],
-            //     'username' => 'root',
+            'read' => [
+                'host' => [
+                    '127.0.0.1',
+                ],
+                'username' => 'slave',
+                'password' => '1234567',
+            ],
+            'write' => [
+                'host' => [
+                    '127.0.0.1',
+                ],
+                'username' => 'root',
                 
-            // ],
-            // 'sticky' => true,
+            ],
+            'sticky' => true,
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

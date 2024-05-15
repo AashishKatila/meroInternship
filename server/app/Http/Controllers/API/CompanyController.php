@@ -15,7 +15,43 @@ use Illuminate\Support\Facades\DB;
 class CompanyController extends Controller
 {
     use HttpResponses;
-    public function login(LoginCompanyRequest $request)
+
+    /**
+     * @OA\Post(
+     *     path="/api/company/login",
+     *     tags={"login company"},
+     *     summary="login admin by using email and password",
+     *     operationId="login_company",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *           
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function login_company(LoginCompanyRequest $request)
     {
        $request->validated($request->all());
 
@@ -29,8 +65,57 @@ class CompanyController extends Controller
         'user' => $company,
         'token' => $company->createToken( 'Minor',['company'])->plainTextToken,
        ]);
+       
     }
-    public function register(StoreCompanyRequest $request)
+       /**
+     * @OA\Post(
+     *     path="/api/company/register",
+     *     tags={"Register company"},
+     *     summary="Register new company",
+     *     operationId="register_company",
+     *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *                 @OA\Property(
+     *                     property="name",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="registration_number",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function register_company(StoreCompanyRequest $request)
     {
         $request->validated($request->all());
 
@@ -48,7 +133,24 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function details()
+
+    /**
+     * @OA\get(
+     *     path="/api/company/details",
+     *     tags={"company details"},
+     *     summary="company details",
+     *     security={{"sanctum":{}}},
+     *     operationId="details_company",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     )
+     * )
+     */
+
+
+    public function details_company()
     {
         $company = Auth::user();
         return $this->success([
@@ -56,7 +158,23 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+
+    /**
+     * @OA\Post(
+     *     path="/api/company/logout",
+     *     tags={"logout"},
+     *     summary="to logout company",
+     *     security={{"sanctum":{}}},
+     *     operationId="logout_company",
+    *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     )
+     * )
+     */
+
+    public function logout_company(Request $request)
     {
         auth()->user()->tokens()->delete();
         return [
@@ -64,7 +182,65 @@ class CompanyController extends Controller
         ];
     }
 
-    public function update_profile(StoreCompanyRequest $request)
+
+    public function delete_comapny()
+    {
+        $company = Auth::user('user');
+        Company::find($company->id)->delete();
+        return $this->success([
+            'message' => 'successfully deleted user',
+        ]);
+    }
+
+     /**
+     * @OA\Post(
+     *     path="/api/company/update_profile",
+     *     tags={"update company profile"},
+     *     summary="update company profile",
+     *     operationId="update_company_profile",
+     *          @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     * 
+     *                 @OA\Property(
+     *                     property="name",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="email",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password",
+     *                     description="Updated name of the pet",
+     *                     type="password",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *                  @OA\Property(
+     *                     property="registration_number",
+     *                     description="Updated name of the pet",
+     *                     type="string",
+     *                 ),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function update_company_profile(StoreCompanyRequest $request)
     {
         $request->validated($request->all());
         $company = Auth::user('comapny');
