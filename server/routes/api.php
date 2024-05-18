@@ -9,6 +9,7 @@ use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\API\UserPasswordController;
 use App\Http\Controllers\API\CompanyPasswordController;
 use App\Http\Controllers\API\AdminPasswordController;
+use App\Http\Controllers\API\JobController;
 use App\Http\Controllers\EmailVerificationControllerUser;
 use App\Http\Controllers\EmailVerificationControllerCompany;
 use Illuminate\Http\Request;
@@ -124,7 +125,8 @@ Route::middleware(['auth:sanctum','abilities:company'])->group(function () {
 //route to get all the job posted by the company
 Route::get('job_posted', [CompanyFormController::class, 'get_all_post']);
 Route::get('search_job', [SkillController::class, 'filter_skill']);
-
+Route::get('jobs', [JobController::class, 'all_jobs']);
+Route::get('job/{id}', [JobController::class, 'get_job']);  
 Route::group(['middleware' => 'web'], function () {
     Route::get('api/documentation', '\L5Swagger\Http\Controllers\SwaggerController@api')->name('l5swagger.api');
 });
