@@ -48,8 +48,8 @@ return [
                 'host' => [
                     '127.0.0.1',
                 ],
-                'username' => 'slave',
-                'password' => '1234567',
+                'username' => 'root', //'username' => 'slave',
+                //'password' => '1234567',
             ],
             'write' => [
                 'host' => [

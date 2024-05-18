@@ -10,7 +10,7 @@ class JobController extends Controller
     public function all_jobs()
     {
         try {
-            $job_list = job_form::pagination(10);
+            $job_list = job_form::paginate(10);
 
             return response()->json([
                 'jobs' => $job_list,
