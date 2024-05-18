@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('job_forms', function (Blueprint $table) {
             $table->id('job_id');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('skills');
             $table->date('due_date')->format('d-m-Y');
             $table->integer('company_id')->unsigned();
