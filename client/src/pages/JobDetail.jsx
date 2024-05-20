@@ -36,9 +36,7 @@ const JobDetail = () => {
       console.log(formData)
       dispatch(applyForJob(formData)).then((result) =>{
         if(result.payload){
-          alert("Succesfulyy applied")
-        }else{
-          alert("Failed")
+          alert(result.payload.status || result.payload.message)
         }
       })
     }
