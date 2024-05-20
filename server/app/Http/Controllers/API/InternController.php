@@ -58,6 +58,7 @@ class InternController extends Controller
 
     public function login_intern(LoginInternRequest $request)
     {
+        // var_dump($request);
        $request->validated($request->all());
 
        if(!Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password])){

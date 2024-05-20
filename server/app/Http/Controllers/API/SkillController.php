@@ -60,17 +60,18 @@ class SkillController extends Controller
         foreach ($job_list as $job) {
 
             $parts1 = explode(" ", $job->skills);
-            $parts2 = explode(" ", $user->skills);
-            $matchingSkills = array_intersect($parts1, $parts2);
+            // $parts2 = explode(" ", $user->skills);
+            // $matchingSkills = array_intersect($parts1, $parts2);
             // dd($matchingSkills);
             $weight = 0;
             // dd(count($matchingSkills));
-            $recommendationScore = $weight + count($matchingSkills);
+            $recommendationScore = $weight + count($parts1);
+            array_push($jobs, $job);
             // dd($recommendationScore);
-            if ($recommendationScore >= 2) {
-                // $recommendation = "Based on your skills and experience, you are a strong match for this job.";
-                array_push($jobs, $job);
-            }
+            // if ($recommendationScore >= 2) {
+            //     // $recommendation = "Based on your skills and experience, you are a strong match for this job.";
+            //     array_push($jobs, $job);
+            // }
         }
         return response()->json([
             'job_list' => $jobs
