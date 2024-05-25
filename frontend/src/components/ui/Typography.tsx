@@ -54,10 +54,14 @@ export interface TypographyProps
     VariantProps<typeof typographyVariants> {
   asChild?: boolean;
   as?: string;
+  label?: string | number;
 }
 
 const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-  ({ className, variant, weight, as, asChild, ...props }, ref) => {
+  (
+    { className, label, variant, weight, as, asChild, children, ...props },
+    ref
+  ) => {
     const Comp = asChild
       ? Slot
       : as ?? (variant ? variantElementMap[variant] : undefined) ?? "div";
@@ -66,7 +70,9 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         className={cn(typographyVariants({ variant, weight, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {label ?? children}
+      </Comp>
     );
   }
 );

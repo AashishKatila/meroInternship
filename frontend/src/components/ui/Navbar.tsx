@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Button } from "./Button";
 import { Typography } from "./Typography";
 
@@ -5,19 +6,23 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center ">
       <div>
-        <Typography variant="h6" weight="semibold" className="text-teal_700">
+        <Typography
+          variant="h6"
+          weight="semibold"
+          className={cn("text-teal_700")}
+        >
           Job Portal
         </Typography>
       </div>
       <div>
         <Button variant="link">
-          <Typography weight="semibold">Home</Typography>
+          <Typography weight="semibold" label="Home" />
         </Button>
         <Button variant="link">
-          <Typography weight="semibold">Jobs</Typography>
+          <Typography weight="semibold" label="Jobs" />
         </Button>
         <Button variant="link">
-          <Typography weight="semibold">Category</Typography>
+          <Typography weight="semibold" label="Category" />
         </Button>
       </div>
       <div>

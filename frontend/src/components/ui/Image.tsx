@@ -1,16 +1,24 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface ImageProps {
   source: string;
   alternate: string;
+  className?: string;
 }
 
-const Image: React.FC<ImageProps> = ({ source, alternate }) => {
+const Image: React.FC<ImageProps> = ({
+  source,
+  alternate,
+  className,
+  ...props
+}) => {
   return (
     <img
       src={source}
       alt={alternate}
-      className=" max-h-20 w-full object-contain max-w-32 grayscale "
+      className={cn(" w-full object-contain ", className)}
+      {...props}
     />
   );
 };
