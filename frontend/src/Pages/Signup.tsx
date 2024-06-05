@@ -7,11 +7,12 @@ import { Typography } from "@/components/ui/Typography";
 import { SignupSchema } from "../utils/zod";
 import { ValidatedInput } from "@/components/ui/ValidatedInput";
 import useMutate from "@/customHook/useMutate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type SignupFormInputs = z.infer<typeof SignupSchema>;
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
   //React Hook Form
   const {
     register,
@@ -56,9 +57,9 @@ const Signup: React.FC = () => {
         <ValidatedInput
           placeholder="Confirm Password"
           type="password"
-          name="confirmPassword"
+          name="password_confirmation"
           register={register}
-          error={errors.confirmPassword}
+          error={errors.password_confirmation}
         />
         <ValidatedInput
           placeholder="Skills"
@@ -81,7 +82,7 @@ const Signup: React.FC = () => {
           </Button>
         </div>
         <div className="text-center mt-2">
-          {mutation.isError && <p>Error: {mutation.error.message}</p>}
+          {mutation.isError && <p>Error: Email already exists</p>}
           {mutation.isSuccess && <p>Signup successful!</p>}
         </div>
       </form>

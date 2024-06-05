@@ -7,11 +7,12 @@ import { Typography } from "@/components/ui/Typography";
 import { LoginSchema } from "../utils/zod";
 import { ValidatedInput } from "@/components/ui/ValidatedInput";
 import useMutate from "@/customHook/useMutate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   //React Hook Form
   const {
     register,

@@ -17,6 +17,6 @@ export const SignupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8,{message:"Password must be atleast 8 characters"}).regex(passwordValidation,{message:"Password isnot valid"})
   .max(18,{message:"Password is too long"}),
-  confirmPassword: z.string(),
+  password_confirmation: z.string(),
   skills: z.string(),
-}).refine((data) => data.password === data.confirmPassword , {message:"Passwords donot match",path:["confirmPassword"]})
+}).refine((data) => data.password === data.password_confirmation , {message:"Passwords donot match",path:["password_confirmation"]})
