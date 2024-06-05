@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
 import { Typography } from "./Typography";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -11,7 +12,7 @@ const Navbar = () => {
           weight="semibold"
           className={cn("text-teal_700")}
         >
-          Job Portal
+          Intern Portal
         </Typography>
       </div>
       <div>
@@ -26,9 +27,11 @@ const Navbar = () => {
         </Button>
       </div>
       <div>
-        <Button variant="outline" className="rounded-full mr-2">
-          Login / Signup
-        </Button>
+        <Link to="/login">
+          <Button variant="outline" className="rounded-full mr-2">
+            Login / Signup
+          </Button>
+        </Link>
         <Button className="bg-teal_700 text-white rounded-full ml-2">
           Post a Job
         </Button>
