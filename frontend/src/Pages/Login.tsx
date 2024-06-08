@@ -1,18 +1,19 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/Button";
 import { Typography } from "@/components/ui/Typography";
-import { LoginSchema } from "../utils/zod";
 import { ValidatedInput } from "@/components/ui/ValidatedInput";
-import useMutate from "@/customHook/useMutate";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginSchema } from "../utils/zod";
+import { useDispatch } from "react-redux";
+import { authUser } from "@/redux/authSlice";
+import { AppDispatch } from "@/redux/store";
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
   //React Hook Form
   const {
     register,
@@ -22,11 +23,17 @@ const Login: React.FC = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const mutation = useMutate("login");
-
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const onSubmit = (userCredentials: LoginFormInputs) => {
-    mutation.mutate(userCredentials);
     console.log("Login data:", userCredentials);
+    dispatch(authUser({ userCredentials }))
+      .unwrap()
+      .then((result) => {
+        if (result) {
+          navigate("/dashboard");
+        }
+      });
   };
 
   return (
@@ -62,8 +69,8 @@ const Login: React.FC = () => {
           </Button>
         </div>
         <div className="text-center mt-2">
-          {mutation.isError && <p>Error: {mutation.error.message}</p>}
-          {mutation.isSuccess && <p>Login successful!</p>}
+          {/* {auth.isError && <p>Error: {auth.isError}</p>} */}
+          {/* {auth.isSuccess && <p>Login successful!</p>} */}
         </div>
       </form>
       <div className="flex justify-center">

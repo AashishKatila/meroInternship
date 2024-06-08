@@ -1,18 +1,20 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/Button";
 import { Typography } from "@/components/ui/Typography";
-import { SignupSchema } from "../utils/zod";
 import { ValidatedInput } from "@/components/ui/ValidatedInput";
-import useMutate from "@/customHook/useMutate";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { SignupSchema } from "../utils/zod";
+import { useDispatch } from "react-redux";
+import { signupUser } from "@/redux/authSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 type SignupFormInputs = z.infer<typeof SignupSchema>;
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
   //React Hook Form
   const {
     register,
@@ -22,11 +24,20 @@ const Signup: React.FC = () => {
     resolver: zodResolver(SignupSchema),
   });
 
-  const mutation = useMutate("register");
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = (userCredentials: SignupFormInputs) => {
-    mutation.mutate(userCredentials);
     console.log("Signup data:", userCredentials);
+    dispatch(signupUser({ userCredentials }))
+      .unwrap()
+      .then((result) => {
+        if (result) {
+          navigate("/login");
+        }
+      });
   };
 
   return (
@@ -82,8 +93,22 @@ const Signup: React.FC = () => {
           </Button>
         </div>
         <div className="text-center mt-2">
-          {mutation.isError && <p>Error: Email already exists</p>}
-          {mutation.isSuccess && <p>Signup successful!</p>}
+          {loading && (
+            <Typography
+              label="Loading"
+              weight="medium"
+              variant="smallText"
+              className="text-teal-400"
+            />
+          )}
+          {error && (
+            <Typography
+              label={error}
+              weight="medium"
+              variant="smallText"
+              className="text-red"
+            />
+          )}
         </div>
       </form>
       <div className="flex justify-center">
