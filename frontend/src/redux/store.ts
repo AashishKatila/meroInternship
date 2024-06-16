@@ -4,6 +4,7 @@ import jobListReducer from './jobListSlice'
 import companyAuthReducer from './companyAuthSlice'
 import companyReducer from './companyDetailSlice'
 import companyJobReducer from './companyJobSlice'
+import companyPostJobReducer from './companyPostSlice'
 
 export type AppStore = typeof store
 export type RootState = ReturnType<AppStore['getState']>
@@ -16,6 +17,7 @@ const store = configureStore({
         companyAuth: companyAuthReducer,
         companyDetail: companyReducer,
         companyJob: companyJobReducer,
+        postJob: companyPostJobReducer
     }
 })
 
