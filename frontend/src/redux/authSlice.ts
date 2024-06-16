@@ -9,7 +9,7 @@ type LoginFormInputs = z.infer<typeof LoginSchema>;
 export const authUser = createAsyncThunk('auth/authUser',async({ userCredentials}: { userCredentials: LoginFormInputs},thunkAPI) =>{
     try{const response = await axios.post("http://127.0.0.1:8000/api/login",userCredentials)
     const userInformation = response.data.data;
-    console.log(userInformation)
+    // console.log(userInformation)
     if(response.status === 200){
         return userInformation
     }else{
@@ -21,7 +21,7 @@ export const authUser = createAsyncThunk('auth/authUser',async({ userCredentials
 })
 
 export const signupUser = createAsyncThunk('auth/signupUser',async({ userCredentials }: { userCredentials: SignupFormInputs},thunkAPI) =>{
-    console.log(userCredentials)
+    // console.log(userCredentials)
     try{const response = await axios.post("http://127.0.0.1:8000/api/register",userCredentials)
     const userInformation = response.data.data;
     return userInformation
