@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Typography } from "@/components/ui/Typography";
 import { fetchAllJobs } from "@/redux/jobListSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { fetchUserDetail } from "@/redux/userDetailSlice";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -11,9 +12,14 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const handleLogout = () => {
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     navigate("/login");
   };
+
+  const { detailLoading, userDetail, detailError } = useSelector(
+    (state: RootState) => state.user
+  );
+  // console.log(userDetail);
 
   const { loading, jobList, error } = useSelector(
     (state: RootState) => state.jobList
@@ -21,11 +27,23 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchAllJobs());
+    dispatch(fetchUserDetail());
   }, [dispatch]);
 
   return (
     <div>
       <Typography label="Dashboard" />
+
+      {!detailLoading && userDetail ? (
+        <div className="flex m-4 items-center gap-4">
+          <div>{userDetail.user?.id}</div>
+          <div>{userDetail.user?.name}</div>
+          <div>{userDetail.user?.email}</div>
+          <div>{userDetail.user?.skills}</div>
+        </div>
+      ) : (
+        <div>User Detail loading</div>
+      )}
 
       <div>
         {!loading && jobList ? (

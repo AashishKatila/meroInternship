@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from './authSlice'
+import userReducer from './userDetailSlice'
 import jobListReducer from './jobListSlice'
 import companyAuthReducer from './companyAuthSlice'
 import companyReducer from './companyDetailSlice'
@@ -13,6 +14,7 @@ export type AppDispatch = AppStore['dispatch']
 const store = configureStore({
     reducer:{
         auth: authReducer,
+        user: userReducer,
         jobList : jobListReducer,
         companyAuth: companyAuthReducer,
         companyDetail: companyReducer,
