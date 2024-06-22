@@ -111,7 +111,7 @@ Route::middleware(['auth:sanctum','abilities:company'])->group(function () {
     Route::post('company/delete_job_form/{job_id}', [CompanyFormController::class, 'delete_job_form']);
 
     Route::get('company/job_posts/{job_id}', [InternFormController::class, 'get_applied_user_form']); //form and detail
-    Route::get('company/job_post/{job_id}/{id}', [InternFormController::class, 'user_details']); //user details
+    Route::get('company/job_posts/{job_id}/{id}', [InternFormController::class, 'user_details']); //user details
     Route::get('user_pdf/{job_id}/{id}', [InternFormController::class, 'user_form_pdf']); //user pdf
     Route::get('company/job_list', [CompanyFormController::class, 'job_list']); //job liststed by a company
 
